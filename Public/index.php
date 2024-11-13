@@ -1,27 +1,31 @@
 <?php
 include "./../App/configuracao.php";
-include "./../App/Libraries/Rota.php";
-include "./../App/Libraries/Controller.php";
-include "./../App/Libraries/Database.php";
+include "./../App/autoload.php";
 
 $db = new Database;
-
-
-
-
-
-
-$db->query("SELECT * FROM posts");
-$db->resultado
 /*
+//EXIBE VÁRIOS RESULTADOS
+$db->query("SELECT * FROM posts");
+foreach($db->resultados() as $post){
+    echo $post->titulo. ' | '.$post->texto.'<br>';
+}
+
+//EXIBE APENAS UM RESULTADO
+$db->query("SELECT * FROM posts ORDER BY id DESC");
+$db->resultado();
+echo $db->resultado()->titulo;
+*/
+/*
+//deletando linha do banco
 $id = 1;
 $db->query("DELETE FROM posts WHERE id = :id");
 $db->bind(":id",$id);
 $db->executa();
-echo '<hr>Total atualizado: '
-*/
+echo '<hr>Total atualizado: '.$db->totalResultados();
 
+*/
 /*
+//atualizando banco
 date_default_timezone_set('America/Cuiaba');
 $id = 3;
 $usuarioId = 8;
@@ -29,23 +33,23 @@ $titulo = "Algoritmos";
 $texto = "Algoritmos é muito legal";
 $criadoEm = date('Y-m-d H:i:s');
 
-$db->query("UPDATE posts SET usuario_id = :usuario_id, título = :titulo, texto = :texto, criado_em=:criado WHERE id = :id");
+$db->query("UPDATE posts SET usuario_id = :usuario_id, titulo = :titulo, texto = :texto, criado_em=:criadoEm WHERE id = :id");
 
 $db->bind(":id",$id);
 $db->bind(":usuario_id",$usuarioId);
-$db->bind(":titulo",$texto);
+$db->bind(":titulo",$titulo);
+$db->bind(":texto",$texto);
 $db->bind(":criadoEm",$criadoEm);
 
-
 $db->executa();
-echo '<hr>Total Resultados: '.db->totalResultados();
+echo '<hr>Total Resultados: '.$db->totalResultados();
 */
 
 /*
 //inserindo dados no banco
 $usuario_id = 8;
-$titulo = 'Programação..';
-$texto = 'turma conversa muito...';
+$titulo = 'Programação';
+$texto = 'Programação web';
 
 $db->query("INSERT INTO posts (usuario_id, titulo, texto) VALUES (:usuario_id, :titulo, :texto)");
 $db->bind(":usuario_id",$usuario_id);
@@ -56,6 +60,7 @@ $db->executa();
 
 echo '<hr>Total Resultados: '.$db->totalResultados();
 echo '<hr>Ultimo ID inserido'.$db->ultimoIdInserido();
+*/
 
 ?>
 <!DOCTYPE html>
@@ -77,5 +82,3 @@ echo '<hr>Ultimo ID inserido'.$db->ultimoIdInserido();
     <script src="<?=URL?>/public/bootstrap/js/bootstrap.js"></script>
     <script src="<?=URL?>/public/js/query.js"></script>
 </body>
-</html>
-*/
